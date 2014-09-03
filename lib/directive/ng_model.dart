@@ -313,9 +313,7 @@ class InputCheckbox {
   InputCheckbox(dom.Element this.inputElement, this.ngModel,
                 this.scope, this.ngTrueValue, this.ngFalseValue, this.ngModelOptions) {
     ngModel.render = (value) {
-      scope.rootScope.domWrite(() {
-        inputElement.checked = ngTrueValue.isValue(value);
-      });
+      inputElement.checked = ngTrueValue.isValue(value);
     };
     inputElement
         ..onChange.listen((_) => ngModelOptions.executeChangeFunc(() {
@@ -369,11 +367,9 @@ class InputTextLike {
 
   InputTextLike(this.inputElement, this.ngModel, this.scope, this.ngModelOptions) {
     ngModel.render = (value) {
-      scope.rootScope.domWrite(() {
-        if (value == null) value = '';
-        var currentValue = typedValue;
-        if (!eqOrNaN(value, currentValue)) typedValue = value;
-      });
+      if (value == null) value = '';
+      var currentValue = typedValue;
+      if (!eqOrNaN(value, currentValue)) typedValue = value;
     };
 
     inputElement
@@ -442,12 +438,10 @@ class InputNumberLike {
 
   InputNumberLike(dom.Element this.inputElement, this.ngModel, this.scope, this.ngModelOptions) {
     ngModel.render = (value) {
-      scope.rootScope.domWrite(() {
-        if (value != typedValue
-            && (value == null || value is num && !value.isNaN)) {
-          typedValue = value;
-        }
-      });
+      if (value != typedValue
+          && (value == null || value is num && !value.isNaN)) {
+        typedValue = value;
+      }
     };
     inputElement
         ..onChange.listen((event) => ngModelOptions.executeChangeFunc(() => processValue()))
@@ -620,9 +614,7 @@ class InputDateLike {
       ngBindType.idlAttrKind = NgBindTypeForDateLike.NUMBER;
     }
     ngModel.render = (value) {
-      scope.rootScope.domWrite(() {
-        if (!eqOrNaN(value, typedValue)) typedValue = value;
-      });
+      if (!eqOrNaN(value, typedValue)) typedValue = value;
     };
     inputElement
         ..onChange.listen((event) => ngModelOptions.executeChangeFunc(() => processValue()))
@@ -798,9 +790,7 @@ class InputRadio {
       attrs["name"] = _uidCounter.next();
     }
     ngModel.render = (value) {
-      scope.rootScope.domWrite(() {
-        radioButtonElement.checked = (value == ngValue.value);
-      });
+      radioButtonElement.checked = (value == ngValue.value);
     };
     radioButtonElement
         ..onClick.listen((_) {
